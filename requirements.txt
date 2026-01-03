@@ -1,0 +1,35 @@
+# Core
+python-dotenv
+PyYAML
+
+# ML / NLP
+transformers
+torch
+datasets
+sentence-transformers
+scikit-learn
+pandas
+numpy
+nltk
+spacy
+emoji
+langdetect
+textblob
+optuna
+
+# API / Backend
+fastapi
+uvicorn[standard]
+pydantic
+SQLAlchemy
+alembic
+
+# DB
+databases[sqlite]
+
+# Utils
+joblib
+tqdm
+
+
+redis>=5.0.0

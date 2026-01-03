@@ -1,0 +1,135 @@
+# ------------------------------
+# Python
+# ------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# Virtual Environments
+venv/
+.env/
+.env.bak
+.venv/
+ENV/
+env/
+
+# Jupyter / IPython
+.ipynb_checkpoints/
+
+# Byte-compiled cache
+*.ruff_cache/
+
+# ------------------------------
+# OS / Editor Files
+# ------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+*.code-workspace
+
+# ------------------------------
+# Logs
+# ------------------------------
+*.log
+logs/
+nohup.out
+
+# ------------------------------
+# Data & DB
+# ------------------------------
+*.db
+*.sqlite
+*.sqlite3
+feedback.db
+
+
+
+# ------------------------------
+# Hugging Face / Transformers Cache
+# ------------------------------
+.cache/
+huggingface/
+~/.cache/
+~/.huggingface/
+hf_cache/
+tokenizer.json
+
+# ------------------------------
+# Redis dump (if generated)
+# ------------------------------
+dump.rdb
+
+# ------------------------------
+# Model Files
+# ------------------------------
+models/
+checkpoints/
+*.pt
+*.bin
+*.safetensors
+*.h5
+
+# ------------------------------
+# FastAPI / Uvicorn
+# ------------------------------
+*.pid
+
+# ------------------------------
+# Streamlit
+# ------------------------------
+.streamlit/
+.streamlit/secrets.toml
+
+# ------------------------------
+# Environment & Secrets
+# ------------------------------
+*.env
+.env.*
+!env.example
+secrets.json
+config.yml
+config.yaml
+
+# ------------------------------
+# Reports / temp
+# ------------------------------
+tmp/
+temp/
+*.tmp
+
+# ------------------------------
+# PyTest / Coverage
+# ------------------------------
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# ------------------------------
+# VSCode
+# ------------------------------
+.history/
+
+# ------------------------------
+# Node (if frontend later)
+# ------------------------------
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
+
+# ------------------------------
+# Docker
+# ------------------------------
+docker-data/
