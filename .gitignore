@@ -53,7 +53,11 @@ nohup.out
 *.sqlite3
 feedback.db
 
-
+# Local datasets (keep them private)
+data/
+datasets/
+raw_data/
+processed_data/
 
 # ------------------------------
 # Hugging Face / Transformers Cache
