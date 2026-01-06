@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from hate_speech.config import settings
 from db.base import Base
 from db.session import engine
+from .routes import retrain
 
 
 from .routes import prediction, feedback, dashboard_api
@@ -35,6 +36,9 @@ def create_app() -> FastAPI:
     )
 
     app.include_router(dashboard_api.router)
+
+    app.include_router(retrain.router)
+
 
     return app
 

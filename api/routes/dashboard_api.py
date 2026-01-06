@@ -50,3 +50,17 @@ def get_list(limit: int = 200, db: Session = Depends(get_db)):
         })
 
     return data
+
+from fastapi import HTTPException
+
+@router.delete("/delete/{feedback_id}")
+def delete_feedback(feedback_id: int, db: Session = Depends(get_db)):
+    feedback = db.query(Feedback).filter(Feedback.id == feedback_id).first()
+
+    if not feedback:
+        raise HTTPException(status_code=404, detail="Feedback not found")
+
+    db.delete(feedback)
+    db.commit()
+
+    return {"status": "deleted", "id": feedback_id}

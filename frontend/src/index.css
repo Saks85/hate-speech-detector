@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: linear-gradient(
+    135deg,
+    #050b17,
+    #0b1a2d,
+    #000000
+  );
+  color: white;
+}
+
+.bg-glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bg-card {
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.text-muted {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.text-danger {
+  color: #f87171;
+}
+
+.text-success {
+  color: #34d399;
+}
+
+.bg-warning {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+}

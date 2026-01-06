@@ -7,6 +7,7 @@ from continual.replay_dataset import build_replay_dataset
 from continual.weighted_trainer import FeedbackWeightedTrainer
 import torch
 import os
+import argparse
 
 MODEL_BASE = "models/transformer/v1"
 NEW_MODEL = "models/transformer/v2"
@@ -86,4 +87,12 @@ def retrain():
 
 
 if __name__ == "__main__":
-    retrain()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--output-version",
+        type=str,
+        required=True
+    )
+    args = parser.parse_args()
+
+    retrain(output_version=args.output_version)
