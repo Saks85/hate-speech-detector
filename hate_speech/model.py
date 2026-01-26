@@ -23,7 +23,7 @@ INV_LABEL_MAP = {v: k for k, v in LABEL_MAP.items()}
 
 class HateSpeechModel:
     """
-    Wrapper around HF transformer + Sentence-BERT + feature extractor.
+    Wrapper around  Sentence-BERT + feature extractor.
 
     The classifier it uses is the fine-tuned transformer.
     Sentence-BERT embeddings and metadata features are exposed

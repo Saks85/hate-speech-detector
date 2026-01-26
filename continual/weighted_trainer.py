@@ -3,7 +3,7 @@ from transformers import Trainer
 
 class FeedbackWeightedTrainer(Trainer):
     def compute_loss(self, model, inputs, return_outputs=False):
-        # HF Trainer ALWAYS passes labels separately in inputs for training
+        # Trainer ALWAYS passes labels separately in inputs for training
         labels = inputs["labels"]
 
         # remove only non-model fields
