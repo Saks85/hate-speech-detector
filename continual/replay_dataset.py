@@ -40,10 +40,27 @@ def force_int_label(x):
     if isinstance(x, list):
         x = x[0]
 
-    # unwrap stringified list like "['hate']"
+    # normalize strings
     if isinstance(x, str):
-        x = x.strip("[]'\"").lower()
-        return LABEL_MAP[x]
+        x = x.strip("[]'\"").lower().strip()
+
+        # normalize variants
+        NORMALIZATION_MAP = {
+            "normal": "not_hate",
+            "not hate": "not_hate",
+            "not_hate": "not_hate",
+
+            "offensive": "offensive",
+
+            "hate": "hate",
+            "hate speech": "hate",
+            "hateful": "hate",
+        }
+
+        if x not in NORMALIZATION_MAP:
+            raise ValueError(f"Unknown label in feedback data: {x}")
+
+        return LABEL_MAP[NORMALIZATION_MAP[x]]
 
     # already numeric
     return int(x)

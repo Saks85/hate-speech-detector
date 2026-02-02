@@ -146,12 +146,17 @@ export const deleteFeedback = async (
   }
 };
 
-export const triggerRetrain = async (): Promise<string> => {
+export interface RetrainResponse {
+  status: string;
+  new_version: string;
+}
+
+export const triggerRetrain = async (): Promise<RetrainResponse> => {
   try {
     const res = await apiClient.post("/retrain/");
     return res.data;
   } catch (error) {
-    return handleApiError(error);
+    throw handleApiError(error);
   }
 };
 

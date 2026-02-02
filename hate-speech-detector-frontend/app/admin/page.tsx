@@ -121,10 +121,11 @@ export default function AdminDashboard() {
   const handleRetrain = async () => {
     setIsRetraining(true);
     try {
-      const message = await triggerRetrain();
+      const res = await triggerRetrain();
+
       toast({
         title: "Retraining Started",
-        description: message || "Model retraining has been initiated",
+        description: `New model version: ${res.new_version}`,
       });
     } catch {
       toast({

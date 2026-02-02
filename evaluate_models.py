@@ -10,7 +10,7 @@ import torch
 # CONFIG
 # =========================
 TEST_CSV = "data/processed/test.csv"              # path to your test set
-MODEL_V1 = "models/transformer/v1"
+MODEL_V1 = "models/transformer/v20260129_231157"
 MODEL_V2 = "models/transformer/v2"
 MODEL_NAME = "distilbert-base-uncased"
 MAX_LEN = 128

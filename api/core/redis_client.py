@@ -27,3 +27,11 @@ def set_override(text: str, label: str, moderator="system"):
         "moderator": moderator
     })
     redis_client.set(key, value)
+
+def clear_prediction_cache():
+    """
+    Clears all cached prediction results.
+    Safe to call after model reload.
+    """
+    # OPTION 1: Clear everything (simple & safe for now)
+    redis_client.flushdb()

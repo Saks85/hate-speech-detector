@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     BASE_MODEL_NAME: str = "distilbert-base-uncased"
     NUM_LABELS: int = 3
     MAX_LENGTH: int = 128
-    MODEL_DIR: str = "models/transformer"
+    MODEL_DIR: str = "models/transformer/latest"
     SENTENCE_BERT_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"
 
     TRAIN_BATCH_SIZE: int = 16

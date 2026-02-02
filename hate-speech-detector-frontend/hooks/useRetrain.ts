@@ -13,7 +13,11 @@ export function useRetrain() {
     setSuccess(false);
 
     try {
-      await triggerRetrain();
+      const res = await triggerRetrain();
+
+      // OPTIONAL: log or show version
+      console.log("Retraining started:", res.new_version);
+
       setSuccess(true);
     } catch (err: any) {
       setError(err);
