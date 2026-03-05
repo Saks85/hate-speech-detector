@@ -232,6 +232,4 @@ Important defaults:
 - `Model not found` during inference: Ensure `models/transformer/latest` exists and contains tokenizer + model files
 - Frontend cannot reach backend: Verify backend is running on port `8000` and `NEXT_PUBLIC_API_BASE_URL` is correct
 
-## License
 
-Add your project license here (for example, MIT).
