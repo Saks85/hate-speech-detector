@@ -7,10 +7,10 @@ Context-aware hate speech detection system with a FastAPI backend, continual lea
 This project is designed to go beyond basic hate-speech classification by combining smart dataset construction with continuous model improvement in production.
 
 1. Teacher-student based labeling for hate vs offensive split:
-  A smaller model trained on the Davidson dataset is used as a teacher to refine labels inside broader hate-speech data. This allows the pipeline to split samples into `hate` and `offensive` more consistently, producing cleaner supervision for the main student classifier.
+   A smaller model trained on the Davidson dataset is used as a teacher to refine labels inside broader hate-speech data. This allows the pipeline to split samples into `hate` and `offensive` more consistently, producing cleaner supervision for the main student classifier.
 
 2. Feedback-driven retraining with model versioning:
-  The retraining pipeline accepts moderator feedback and mixes it with original training data (replay-style training) to preserve prior knowledge while learning corrections. Each retraining run is saved as a versioned model, and `models/transformer/latest` is updated to the newest version for serving.
+   The retraining pipeline accepts moderator feedback and mixes it with original training data (replay-style training) to preserve prior knowledge while learning corrections. Each retraining run is saved as a versioned model, and `models/transformer/latest` is updated to the newest version for serving.
 
 ## Features
 
@@ -21,6 +21,10 @@ This project is designed to go beyond basic hate-speech classification by combin
 - Background retraining endpoint to update model from feedback
 - Streamlit moderator dashboard (`dashboard/app.py`)
 - Next.js frontend (`hate-speech-detector-frontend/`)
+
+## Architecture FLow
+
+![alt text](image.png)
 
 ## Repository Structure
 
