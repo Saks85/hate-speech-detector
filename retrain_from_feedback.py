@@ -35,7 +35,7 @@ def set_seed(seed=42):
 
 def tokenize(batch, tokenizer):
     return tokenizer(
-        batch["text"],
+        batch["content"],
         truncation=True,
         padding="max_length",
         max_length=128
@@ -73,10 +73,15 @@ def retrain(output_version: str):
         total_size=3000
     )
 
+    # Filter out rows where "content" is None or empty
+    print(f"Dataset size before filtering: {len(dataset)}")
+    dataset = dataset.filter(lambda x: x["content"] is not None and len(str(x["content"]).strip()) > 0)
+    print(f"Dataset size after filtering: {len(dataset)}")
+    # =========================================================
     dataset = dataset.map(
         lambda batch: tokenize(batch, tokenizer),
         batched=True,
-        remove_columns=["text"]
+        remove_columns=["content"]
     )
 
 

@@ -79,7 +79,7 @@ def load_original_samples(original_csv, sample_size: int):
 
     df["sample_weight"] = 1.0
 
-    return df[["text", "labels", "sample_weight"]]
+    return df[["content", "labels", "sample_weight"]]
 
 
 def build_replay_dataset(

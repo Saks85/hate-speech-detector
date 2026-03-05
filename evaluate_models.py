@@ -11,7 +11,7 @@ import torch
 # =========================
 TEST_CSV = "data/processed/test.csv"              # path to your test set
 MODEL_V1 = "models/transformer/v20260129_231157"
-MODEL_V2 = "models/transformer/v2"
+MODEL_V2 = "models/transformer/v20260203_195201"
 MODEL_NAME = "distilbert-base-uncased"
 MAX_LEN = 128
 
@@ -20,6 +20,13 @@ MAX_LEN = 128
 # =========================
 df = pd.read_csv(TEST_CSV)
 
+# Randomly sample 7000 rows. 
+
+if len(df) > 7000:
+    df = df.sample(n=7000, random_state=42).reset_index(drop=True)
+
+print(f"Data sampled. Evaluated on {len(df)} rows.")
+
 # must match Phase-1
 df["label"] = df["label"].astype(int)
 
@@ -27,7 +34,7 @@ tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
 def tokenize(batch):
     return tokenizer(
-        batch["text"],
+        batch["content"],
         truncation=True,
         padding="max_length",
         max_length=MAX_LEN
