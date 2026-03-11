@@ -1,13 +1,19 @@
 import redis
 import hashlib
 import json
+from hate_speech.config import settings
 
-redis_client = redis.Redis(
-    host="localhost",
-    port=6379,
-    db=0,
-    decode_responses=True
-)
+if settings.REDIS_URL:
+    redis_client = redis.from_url(settings.REDIS_URL, decode_responses=True)
+else:
+    redis_client = redis.Redis(
+        host=settings.REDIS_HOST,
+        port=settings.REDIS_PORT,
+        db=settings.REDIS_DB,
+        password=settings.REDIS_PASSWORD,
+        ssl=settings.REDIS_SSL,
+        decode_responses=True,
+    )
 
 def text_hash(text: str):
     return hashlib.sha256(text.lower().strip().encode()).hexdigest()

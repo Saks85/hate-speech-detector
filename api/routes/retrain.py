@@ -3,9 +3,11 @@ from datetime import datetime
 import subprocess
 import os
 import sys
+from pathlib import Path
 
 from api.deps import inference_service
 from api.core.redis_client import clear_prediction_cache
+from hate_speech.config import settings
 
 router = APIRouter(
     prefix="/api/v1/retrain",
@@ -13,35 +15,42 @@ router = APIRouter(
 )
 
 BASE_MODEL_DIR = "models/transformer"
-LOCK_FILE = os.path.join(BASE_MODEL_DIR, ".retraining.lock")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+LATEST_MODEL_DIR = Path(settings.MODEL_DIR)
+if not LATEST_MODEL_DIR.is_absolute():
+    LATEST_MODEL_DIR = PROJECT_ROOT / LATEST_MODEL_DIR
+
+BASE_MODEL_DIR = LATEST_MODEL_DIR.parent
+LOCK_FILE = BASE_MODEL_DIR / ".retraining.lock"
 
 
 def run_retraining(new_version: str):
-    if os.path.exists(LOCK_FILE):
+    if LOCK_FILE.exists():
         return
 
     try:
-        open(LOCK_FILE, "w").close()
+        LOCK_FILE.touch()
 
         subprocess.run(
             [
                 sys.executable,
-                "retrain_from_feedback.py",
+                str(PROJECT_ROOT / "retrain_from_feedback.py"),
                 "--output-version",
                 new_version,
             ],
-            check=True
+            cwd=str(PROJECT_ROOT),
+            check=True,
         )
 
         # Reload latest model after successful training
-        inference_service.reload(f"{BASE_MODEL_DIR}/latest")
+        inference_service.reload(str(LATEST_MODEL_DIR))
 
         # Clear prediction cache
         clear_prediction_cache()
 
     finally:
-        if os.path.exists(LOCK_FILE):
-            os.remove(LOCK_FILE)
+        if LOCK_FILE.exists():
+            LOCK_FILE.unlink()
 
 
 @router.post("/")

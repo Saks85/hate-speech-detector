@@ -34,6 +34,20 @@ class Settings(BaseSettings):
     TEST_FILE: str = "data/processed/test.csv"
 
     DATABASE_URL: str = "sqlite:///./hate_speech.db"
+    ALLOWED_ORIGINS: str = "http://localhost:3000"
+    ENABLE_API_DOCS: bool = True
+
+    REDIS_URL: str | None = None
+    REDIS_HOST: str = "localhost"
+    REDIS_PORT: int = 6379
+    REDIS_DB: int = 0
+    REDIS_PASSWORD: str | None = None
+    REDIS_SSL: bool = False
+
+    @property
+    def allowed_origins_list(self) -> list[str]:
+        origins = [o.strip() for o in self.ALLOWED_ORIGINS.split(",") if o.strip()]
+        return origins or ["http://localhost:3000"]
 
     class Config:
         env_file = ".env"
