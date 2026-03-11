@@ -1,0 +1,28 @@
+# Python env / caches
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Data and model artifacts
+data/
+models/
+outputs/
+tmp_trainer/
+
+# Local DB and secrets
+*.db
+*.sqlite
+*.sqlite3
+.env
+.env.*
+
+# Frontend deployed separately
+hate-speech-detector-frontend/
+
+# Git/editor noise
+.git/
+.vscode/
+.idea/
+.ipynb_checkpoints/
