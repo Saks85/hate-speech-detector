@@ -1,0 +1,5 @@
+# Extra dependencies for training/retraining/evaluation workflows.
+# Install on top of requirements.txt when doing model development.
+
+datasets
+optuna

@@ -112,6 +112,12 @@ gunicorn -k uvicorn.workers.UvicornWorker -w 1 -b 0.0.0.0:$PORT api.main:app
    - `REDIS_URL=<redis-cloud-url>`
    - `DATABASE_URL=sqlite:///./hate_speech.db`
 
+Image-size guardrails:
+
+- Keep backend deploy on runtime dependencies only (`requirements.txt`)
+- Do not include local `models/`, `data/`, `venv/` in build context
+- Keep frontend deployment separate on Vercel
+
 ### 2. Add persistent volume on Railway
 
 Attach a volume and place model artifacts + SQLite file on it.
@@ -165,6 +171,20 @@ For predictable uptime on free plans:
 - Node.js 20+ (for Next.js frontend)
 - A trained model folder at `models/transformer/latest`
 
+## Dependency Profiles
+
+To keep Railway image size under free-tier limits, dependencies are split:
+
+- `requirements.txt`: runtime/inference/API dependencies (deploy this)
+- `requirements.train.txt`: extra dependencies for training/evaluation
+
+For local training workflows, install both:
+
+```powershell
+pip install -r requirements.txt
+pip install -r requirements.train.txt
+```
+
 ## Backend Setup
 
 1. Create and activate a virtual environment.
@@ -178,6 +198,12 @@ python -m venv venv
 
 ```powershell
 pip install -r requirements.txt
+```
+
+If you will run training or model evaluation locally, also install:
+
+```powershell
+pip install -r requirements.train.txt
 ```
 
 3. Start Redis.

@@ -1,30 +1,25 @@
 # Prevent huge local files from being uploaded when using Railway CLI
-
 venv/
 .venv/
 ENV/
 env/
 
 # Data and model artifacts should not be baked into image
-
 data/
 models/
 outputs/
 tmp_trainer/
 
 # Local runtime artifacts
-
-**pycache**/
-_.db
-_.sqlite
-\*.sqlite3
+__pycache__/
+*.db
+*.sqlite
+*.sqlite3
 
 # Frontend is deployed separately on Vercel
-
 hate-speech-detector-frontend/
 
 # Local tooling
-
 .ipynb_checkpoints/
 .vscode/
 .idea/

@@ -5,7 +5,6 @@ PyYAML
 # ML / NLP
 transformers
 torch
-datasets
 sentence-transformers
 scikit-learn
 pandas
@@ -15,7 +14,6 @@ spacy
 emoji
 langdetect
 textblob
-optuna
 
 # API / Backend
 fastapi
