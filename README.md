@@ -106,6 +106,12 @@ Frontend also needs `hate-speech-detector-frontend/.env`:
 gunicorn -k uvicorn.workers.UvicornWorker -w 1 -b 0.0.0.0:$PORT api.main:app
 ```
 
+If Railway reports image size over 4 GB, use Dockerfile build mode:
+
+- `railway.toml` builder is set to `DOCKERFILE`
+- Deployment installs `requirements.deploy.txt` (CPU-only PyTorch)
+- Frontend/data/model folders are excluded from backend image context
+
 5. Set required env vars in Railway:
    - `ALLOWED_ORIGINS=https://<your-vercel-domain>`
    - `ENABLE_API_DOCS=false`
@@ -114,9 +120,15 @@ gunicorn -k uvicorn.workers.UvicornWorker -w 1 -b 0.0.0.0:$PORT api.main:app
 
 Image-size guardrails:
 
-- Keep backend deploy on runtime dependencies only (`requirements.txt`)
+- Keep backend deploy on runtime dependencies only (`requirements.deploy.txt`)
 - Do not include local `models/`, `data/`, `venv/` in build context
 - Keep frontend deployment separate on Vercel
+
+If the free Railway image limit is still exceeded after Dockerfile mode:
+
+1. Keep backend on Railway but disable retraining endpoint in hosted mode.
+2. Move backend to Render free only for demo usage (cold starts expected).
+3. Use a paid tier or a VM when continuous retraining is required.
 
 ### 2. Add persistent volume on Railway
 

@@ -1,0 +1,37 @@
+# Deployment-only dependencies for Railway backend image
+# Uses CPU-only PyTorch to keep image size below free-tier limits.
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Core
+python-dotenv
+PyYAML
+
+# ML / NLP runtime
+torch==2.5.1+cpu
+transformers
+sentence-transformers
+scikit-learn
+pandas
+numpy
+nltk
+spacy
+emoji
+langdetect
+textblob
+
+# API / Backend
+fastapi
+uvicorn[standard]
+gunicorn
+pydantic
+SQLAlchemy
+alembic
+
+# DB
+databases[sqlite]
+
+# Utils
+joblib
+tqdm
+redis>=5.0.0
