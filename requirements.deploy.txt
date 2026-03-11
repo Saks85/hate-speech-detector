@@ -25,6 +25,7 @@ fastapi
 uvicorn[standard]
 gunicorn
 pydantic
+pydantic-settings
 SQLAlchemy
 alembic
 
