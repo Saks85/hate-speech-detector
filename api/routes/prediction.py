@@ -32,10 +32,16 @@ def predict(
             detail="Text cannot be empty.",
         )
 
-    result = service.predict(
-        text=request.text,
-        include_embedding=request.include_embedding,
-    )
+    try:
+        result = service.predict(
+            text=request.text,
+            include_embedding=request.include_embedding,
+        )
+    except RuntimeError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=str(exc),
+        ) from exc
 
     response = PredictResponse(
         label=result["label"],

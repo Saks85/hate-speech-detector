@@ -4,6 +4,7 @@ from hate_speech.config import settings
 from db.base import Base
 from db.session import engine
 from .routes import retrain
+from .deps import inference_service
 
 
 from .routes import prediction, feedback, dashboard_api
@@ -48,6 +49,7 @@ def create_app() -> FastAPI:
             "status": "ok",
             "version": settings.VERSION,
             "model_dir": settings.MODEL_DIR,
+            "inference": inference_service.readiness(),
         }
 
 

@@ -20,9 +20,13 @@ def text_hash(text: str):
 
 def get_override(text: str):
     key = f"hate_override:{text_hash(text)}"
-    data = redis_client.get(key)
-    if data:
-        return json.loads(data)
+    try:
+        data = redis_client.get(key)
+        if data:
+            return json.loads(data)
+    except redis.RedisError:
+        # Gracefully degrade when Redis is unavailable.
+        return None
     return None
 
 def set_override(text: str, label: str, moderator="system"):
@@ -32,7 +36,11 @@ def set_override(text: str, label: str, moderator="system"):
         "source": "human_override",
         "moderator": moderator
     })
-    redis_client.set(key, value)
+    try:
+        redis_client.set(key, value)
+    except redis.RedisError:
+        # Ignore cache-store failures; DB feedback still persists.
+        pass
 
 def clear_prediction_cache():
     """
@@ -40,4 +48,7 @@ def clear_prediction_cache():
     Safe to call after model reload.
     """
     # OPTION 1: Clear everything (simple & safe for now)
-    redis_client.flushdb()
+    try:
+        redis_client.flushdb()
+    except redis.RedisError:
+        pass

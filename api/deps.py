@@ -14,7 +14,7 @@ def get_db() -> Generator:
         db.close()
 
 
-# Single shared inference service instance
+# Single shared inference service instance (lazy model loading)
 inference_service = InferenceService()
 
 
