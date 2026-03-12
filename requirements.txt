@@ -1,10 +1,13 @@
+# Prefer CPU-only PyTorch wheels (critical for Railway free-tier image size/timeouts).
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 # Core
 python-dotenv
 PyYAML
 
 # ML / NLP
 transformers
-torch
+torch==2.5.1+cpu
 sentence-transformers
 scikit-learn
 pandas
