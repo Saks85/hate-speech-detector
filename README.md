@@ -136,7 +136,7 @@ Attach a volume and place model artifacts + SQLite file on it.
 
 Recommended values:
 
-- `MODEL_DIR=/app/models/transformer/latest`
+- `MODEL_DIR=saks85/hate-speech-detector`
 - keep `hate_speech.db` inside mounted volume path
 
 Without a persistent volume, retraining output and DB changes can be lost.

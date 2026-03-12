@@ -13,7 +13,9 @@ RUN apt-get update \
 
 COPY requirements.deploy.txt ./
 RUN pip install --upgrade pip setuptools wheel \
-    && pip install -r requirements.deploy.txt
+    && pip install -r requirements.deploy.txt \
+    && python -m spacy download en_core_web_sm \
+    && python -c "import nltk; nltk.download('stopwords')"
 
 # Copy only backend-relevant source; frontend/data/models are excluded via .dockerignore.
 COPY . .

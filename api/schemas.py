@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class PredictRequest(BaseModel):
@@ -40,5 +40,4 @@ class FeedbackResponse(BaseModel):
     moderator_id: Optional[str]
     notes: Optional[str]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
