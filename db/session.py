@@ -5,7 +5,9 @@ from hate_speech.config import settings
 
 database_url = settings.DATABASE_URL
 if database_url.startswith("postgres://"):
-    database_url = database_url.replace("postgres://", "postgresql://", 1)
+    database_url = database_url.replace("postgres://", "postgresql+psycopg://", 1)
+elif database_url.startswith("postgresql://"):
+    database_url = database_url.replace("postgresql://", "postgresql+psycopg://", 1)
 
 connect_args = {}
 if database_url.startswith("sqlite"):
