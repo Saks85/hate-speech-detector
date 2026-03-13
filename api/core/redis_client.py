@@ -24,7 +24,7 @@ def get_override(text: str):
         data = redis_client.get(key)
         if data:
             return json.loads(data)
-    except redis.RedisError:
+    except (redis.RedisError, json.JSONDecodeError, TypeError):
         # Gracefully degrade when Redis is unavailable.
         return None
     return None

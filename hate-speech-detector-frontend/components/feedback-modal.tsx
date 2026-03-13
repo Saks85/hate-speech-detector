@@ -34,9 +34,21 @@ interface FeedbackModalProps {
 type FeedbackStep = "confirm" | "provide-label";
 
 const LABEL_OPTIONS = [
-  { value: "Hate Speech", description: "Contains hateful content targeting groups or individuals" },
-  { value: "Offensive", description: "Contains offensive language but not hateful" },
-  { value: "Normal", description: "Contains no offensive or hateful content" },
+  {
+    value: "hate",
+    label: "Hate Speech",
+    description: "Contains hateful content targeting groups or individuals",
+  },
+  {
+    value: "offensive",
+    label: "Offensive",
+    description: "Contains offensive language but not hateful",
+  },
+  {
+    value: "not_hate",
+    label: "Normal",
+    description: "Contains no offensive or hateful content",
+  },
 ];
 
 export function FeedbackModal({
@@ -48,6 +60,8 @@ export function FeedbackModal({
 }: FeedbackModalProps) {
   const [step, setStep] = useState<FeedbackStep>("confirm");
   const [correctLabel, setCorrectLabel] = useState("");
+    const normalizedPredictedLabel = predictedLabel.trim().toLowerCase();
+
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -217,10 +231,10 @@ export function FeedbackModal({
                       <SelectItem 
                         key={option.value} 
                         value={option.value}
-                        disabled={option.value === predictedLabel}
+                        disabled={option.value === normalizedPredictedLabel}
                       >
                         <div className="flex flex-col">
-                          <span className="font-medium">{option.value}</span>
+                          <span className="font-medium">{option.label}</span>
                           <span className="text-xs text-muted-foreground">
                             {option.description}
                           </span>

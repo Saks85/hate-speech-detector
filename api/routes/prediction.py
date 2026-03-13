@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from api.core.redis_client import get_override
+from api.core.label_utils import normalize_label
 from hate_speech.config import settings
 from hate_speech.inference import InferenceService
 
@@ -17,13 +18,19 @@ def predict(
     override = get_override(request.text)
 
     if override:
+        override_label = normalize_label(override.get("label"))
+        if override_label is None:
+            override = None
+
+    if override:
         return {
-            "label": override["label"],
+            "label": override_label,
             "confidence": 1.0,
             "probabilities": {
-                override["label"]: 1.0
+                "not_hate": 1.0 if override_label == "not_hate" else 0.0,
+                "offensive": 1.0 if override_label == "offensive" else 0.0,
+                "hate": 1.0 if override_label == "hate" else 0.0,
             },
-            "source": "human_override"
         }
 
     if not request.text.strip():
