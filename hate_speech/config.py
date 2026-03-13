@@ -35,6 +35,7 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = "sqlite:///./hate_speech.db"
     ALLOWED_ORIGINS: str = "http://localhost:3000"
+    ALLOWED_ORIGIN_REGEX: str | None = None
     ENABLE_API_DOCS: bool = True
 
     REDIS_URL: str | None = None

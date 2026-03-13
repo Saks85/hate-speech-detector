@@ -9,6 +9,11 @@ import { PredictionResult } from "@/components/prediction-result";
 import { predictText, type PredictionResponse } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 
+type ApiErrorShape = {
+  message?: string;
+  status?: number;
+};
+
 export function Analyzer() {
   const [text, setText] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -31,10 +36,14 @@ export function Analyzer() {
     try {
       const prediction = await predictText(text.trim());
       setResult(prediction);
-    } catch {
+    } catch (error: unknown) {
+      const apiError = error as ApiErrorShape;
+      const detail = apiError?.message || "Unable to analyze text. Please check your API connection.";
+      const statusText = apiError?.status ? ` (HTTP ${apiError.status})` : "";
+
       toast({
         title: "Analysis Failed",
-        description: "Unable to analyze text. Please check your API connection.",
+        description: `${detail}${statusText}`,
         variant: "destructive",
       });
     } finally {
