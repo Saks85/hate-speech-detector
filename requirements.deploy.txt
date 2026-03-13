@@ -30,7 +30,7 @@ SQLAlchemy
 alembic
 
 # DB
-databases[sqlite]
+psycopg2-binary
 
 # Utils
 joblib

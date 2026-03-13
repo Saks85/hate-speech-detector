@@ -12,12 +12,13 @@ import shutil
 import tempfile
 import random
 import numpy as np
+from hate_speech.config import settings
 
 #MODEL_BASE = "models/transformer/v1"
 #NEW_MODEL = "models/transformer/v2"
 
 ORIGINAL_DATA = "data/processed/train.csv"
-FEEDBACK_DB = "hate_speech.db"
+FEEDBACK_DB = settings.DATABASE_URL
 
 def freeze_lower_layers(model):
     for param in model.distilbert.embeddings.parameters():

@@ -1,8 +1,8 @@
-import sqlite3
 import pandas as pd
 import random
 from datasets import Dataset
 import datasets
+from sqlalchemy import create_engine, text
 
 LABEL_MAP = {
     "not_hate":0,
@@ -15,17 +15,28 @@ def load_feedback_samples(
     limit: int = 1000,
     min_confidence: float = 0.0
 ):
-    conn = sqlite3.connect(db_path)
+    database_url = db_path
+    if "://" not in database_url:
+        database_url = f"sqlite:///{database_url}"
+
+    engine = create_engine(database_url)
     query = """
     SELECT text, correct_label, predicted_confidence
     FROM feedback
     WHERE correct_label IS NOT NULL
-      AND predicted_confidence >= ?
+      AND predicted_confidence >= :min_confidence
     ORDER BY id DESC
-    LIMIT ?
+    LIMIT :limit
     """
-    df = pd.read_sql(query, conn, params=(min_confidence, limit))
-    conn.close()
+    with engine.connect() as conn:
+        df = pd.read_sql(
+            text(query),
+            conn,
+            params={"min_confidence": min_confidence, "limit": limit},
+        )
+
+    # Keep a consistent training schema across original + feedback datasets.
+    df = df.rename(columns={"text": "content"})
 
     df["labels"] = df["correct_label"].apply(force_int_label)
 
@@ -33,7 +44,7 @@ def load_feedback_samples(
         lambda c: 2.0 if c < 0.6 else 1.5
     )
 
-    return df[["text", "labels", "sample_weight"]]
+    return df[["content", "labels", "sample_weight"]]
 
 def force_int_label(x):
     # unwrap list like ['hate'] or [1]
