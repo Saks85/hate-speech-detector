@@ -23,10 +23,7 @@ class InferenceService:
 
     def predict(self, text: str, include_embedding: bool = False) -> Dict:
         self._ensure_loaded()
-        result = self._model.predict(text)
-        if not include_embedding:
-            result.pop("sentence_bert_embedding", None)
-        return result
+        return self._model.predict(text, include_embedding=include_embedding)
 
     def reload(self, new_model_dir: str):
         # Atomic model swap

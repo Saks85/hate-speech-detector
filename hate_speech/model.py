@@ -69,7 +69,7 @@ class HateSpeechModel:
             logits = outputs.logits
         return logits.squeeze(0)
 
-    def predict(self, text: str) -> Dict:
+    def predict(self, text: str, include_embedding: bool = False) -> Dict:
         # Full pipeline
         preproc = self.preprocessor.preprocess(text)
         processed_text = preproc["lemmatized"] or preproc["normalized"]
@@ -84,17 +84,19 @@ class HateSpeechModel:
         label = LABEL_MAP[label_idx]
         confidence = float(probs[label_idx])
 
-        # Sentence-BERT embedding
-        embedding = self.sentence_bert.encode(
-            [processed_text], normalize_embeddings=True
-        )[0].tolist()
-
-        return {
+        response = {
             "label": label,
             "label_index": label_idx,
             "confidence": confidence,
             "probabilities": {LABEL_MAP[i]: float(p) for i, p in enumerate(probs)},
             "preprocessing": preproc,
             "metadata_features": metadata,
-            "sentence_bert_embedding": embedding,  # you might not want to send full vector in API response
         }
+
+        if include_embedding:
+            # Sentence-BERT embedding is expensive; compute only when explicitly requested.
+            response["sentence_bert_embedding"] = self.sentence_bert.encode(
+                [processed_text], normalize_embeddings=True
+            )[0].tolist()
+
+        return response
